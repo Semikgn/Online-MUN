@@ -95,5 +95,27 @@ def execute_action():
     flash(result_message, 'success')
     return redirect(url_for('admin_panel'))
 
+@app.route('/api/reset_game', methods=['POST'])
+@login_required
+def reset_game():
+    try:
+        # 1. Mevcut verileri sil (Tabloları boşalt)
+        db.session.query(EventLog).delete()
+        db.session.query(Country).delete()
+        
+        # 2. Değişikliği onayla
+        db.session.commit()
+        
+        # 3. Başlangıç verilerini (setup_db.py içinden) geri yükle
+        seed_data()
+        
+        flash('⚠️ OYUN BAŞARIYLA SIFIRLANDI! Tüm veriler başlangıç durumuna döndü.', 'danger')
+        
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Hata oluştu: {str(e)}', 'danger')
+        
+    return redirect(url_for('admin_panel'))
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
