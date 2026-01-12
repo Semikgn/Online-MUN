@@ -31,8 +31,10 @@ def seed_data():
         # Portekiz: Daha mütevazı bütçe ama sosyal açıdan (Mutluluk) güçlü.
         Country(name="Portekiz", budget=280, military=30, oil=10, food=70, tech=60, happiness=72, inflation=8),
     ]
-    
-    db.session.add_all(countries)
+
+    for country in countries:
+        db.session.add(country)
+
     db.session.commit()
     print("Veritabanı 15 ülke ile güncellendi.")
 

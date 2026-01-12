@@ -72,7 +72,17 @@
                     EYLEMİ GERÇEKLEŞTİR
                 </button>
             </form>
-            
+            <hr class="my-5" style="border-color: #e74c3c;">
+
+            <div class="text-center">
+                <h4 class="text-danger mb-3">☠️ TEHLİKELİ BÖLGE</h4>
+                <p class="text-muted">Bu işlem tüm olay geçmişini siler ve ülke puanlarını fabrika ayarlarına döndürür.</p>
+                
+                <button type="button" class="btn btn-outline-danger w-50" data-bs-toggle="modal" data-bs-target="#resetModal">
+                    🛑 OYUNU SIFIRLA
+                </button>
+            </div>
+
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, msg in messages %}
@@ -101,6 +111,27 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
                     <button type="button" class="btn btn-danger" onclick="submitForm()">Evet, Onayla</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="resetModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">🚨 DİKKAT: Oyun Sıfırlanacak!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tüm ilerleme, haberler ve ülke değişiklikleri <strong>KALICI OLARAK SİLİNECEK</strong>.</p>
+                    <p>Sistemi "Başlangıç Günü"ne döndürmek istediğinize emin misiniz?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <form action="/api/reset_game" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger fw-bold">Evet, Her Şeyi Sil</button>
+                    </form>
                 </div>
             </div>
         </div>
