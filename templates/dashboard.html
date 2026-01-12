@@ -142,17 +142,36 @@
                         const cardHTML = `
                             <div class="card">
                                 <div class="country-name">${country.name}</div>
+                                
                                 <div class="stat-row">
-                                    <span>Ekonomi:</span>
-                                    <span class="stat-val">${country.stats.economy}</span>
+                                    <span>💰 Bütçe:</span>
+                                    <span class="stat-val">$${country.stats.budget} Mr</span>
                                 </div>
                                 <div class="stat-row">
-                                    <span>Askeri:</span>
+                                    <span>⚔️ Askeri:</span>
                                     <span class="stat-val">${country.stats.military}</span>
                                 </div>
+                                <hr style="border-color: #333;">
                                 <div class="stat-row">
-                                    <span>İstikrar:</span>
-                                    <span class="stat-val">${country.stats.stability}%</span>
+                                    <span>🛢️ Petrol:</span>
+                                    <span class="stat-val">${country.stats.oil}</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span>🍞 Gıda:</span>
+                                    <span class="stat-val">${country.stats.food}</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span>💻 Teknoloji:</span>
+                                    <span class="stat-val">${country.stats.tech}</span>
+                                </div>
+                                <hr style="border-color: #333;">
+                                <div class="stat-row">
+                                    <span>😊 Mutluluk:</span>
+                                    <span class="stat-val ${country.stats.happiness < 40 ? 'danger' : 'success'}">%${country.stats.happiness}</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span>📈 Enflasyon:</span>
+                                    <span class="stat-val ${country.stats.inflation > 20 ? 'danger' : 'success'}">%${country.stats.inflation}</span>
                                 </div>
                             </div>
                         `;

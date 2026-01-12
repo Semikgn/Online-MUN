@@ -1,38 +1,48 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-# DB nesnesini burada başlatıyoruz
+
 db = SQLAlchemy()
 
-# Ülke modeli
 class Country(db.Model):
     __tablename__ = 'countries'
     
+    # Temel Bilgiler
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
-    flag_url = db.Column(db.String(200)) # Bayrak
     
-    # İstatistikler (0-100 arası)
-    economy = db.Column(db.Integer, default=50)
-    military = db.Column(db.Integer, default=50)
-    stability = db.Column(db.Integer, default=50)
+    # 1. Finansal & Askeri
+    budget = db.Column(db.Integer, default=1000) # Milyar $ cinsinden bütçe
+    military = db.Column(db.Integer, default=50) # Askeri Güç (0-100)
+    
+    # 2. Kaynaklar (0-100)
+    oil = db.Column(db.Integer, default=50)      # Enerji/Petrol stoğu
+    food = db.Column(db.Integer, default=50)     # Gıda stoğu
+    tech = db.Column(db.Integer, default=50)     # Teknoloji seviyesi
+    
+    # 3. Sosyal Göstergeler
+    happiness = db.Column(db.Integer, default=50) # Halk Mutluluğu (0-100)
+    inflation = db.Column(db.Integer, default=10) # Enflasyon Oranı (%)
     
     def to_dict(self):
-        """Objeyi JSON formatına çevirmek için yardımcı fonksiyon"""
         return {
             'id': self.id,
             'name': self.name,
             'stats': {
-                'economy': self.economy,
+                'budget': self.budget,
                 'military': self.military,
-                'stability': self.stability
+                'oil': self.oil,
+                'food': self.food,
+                'tech': self.tech,
+                'happiness': self.happiness,
+                'inflation': self.inflation
             }
         }
-# Ekstra: Olay günlüğü modeli
+
 class EventLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.String(255), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now)
-    # Yardımcı fonksiyon
+    
     def to_dict(self):
         return {
             'message': self.message,
